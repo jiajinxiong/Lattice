@@ -369,7 +369,7 @@ classdef Lattice
                 h11 = kk_hamilton(obj,hopping,varargin{1},varargin{2});
                 h22 = kk_hamilton(obj,hopping,-varargin{1},-varargin{2});
                 len = length(h11);
-                Delta = kk_hamilton(obj,hopping_BdG,varargin{3},varargin{4},1);
+                Delta = kk_hamilton(obj,hopping_BdG,varargin{1},varargin{2},1);
                 ham = zeros(2*len);
                 ham(1:len,1:len) = h11/2;           ham(1:len,len+1:end) = Delta;
                 ham(len+1:end,1:len) = -conj(Delta);ham(len+1:end,len+1:end) = -h22.'/2;
@@ -413,7 +413,7 @@ classdef Lattice
                 s=scatter(x,y,100,'filled','MarkerEdgeColor','k');
                 s.AlphaData = rho(:,1);
                 s.MarkerFaceAlpha = 'flat';
-                s. AlphaDataMapping = 'none';
+                s.AlphaDataMapping = 'none';
                 ylim([min(y)-.1,max(y)+.1]);
                 axis equal;
                 yticks([]); xticks([]);
@@ -422,7 +422,7 @@ classdef Lattice
                     s=scatter(x,y,100,'filled','MarkerEdgeColor','k');
                     s.AlphaData = rho(:,j1);
                     s.MarkerFaceAlpha = 'flat';
-                    s. AlphaDataMapping = 'none';
+                    s.AlphaDataMapping = 'none';
                     yticks([]); xticks([]);
                     ylim([min(y)-.1,max(y)+.1]);
                     axis equal
