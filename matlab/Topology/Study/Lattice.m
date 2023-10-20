@@ -484,10 +484,11 @@ classdef Lattice
             %   hopping = {[1,2],[1,0],'linewidth',2};
             %   obj.plot_hopping(hopping) : plot line between the first
             %   point in cell (i,j) and the second point in cell (i+1,j).
-
+            
             parms_num = nargin-1;
             hope_atoms = varargin{1};
             relat_position = varargin{2};
+            random_color = rand(1,3);
             if ~isempty(obj.transport_symmetry)
                 lattice_a2 = fix(obj.max_unequiv/obj.len_a1)+1;
                 lattice_a1 = obj.max_unequiv - (lattice_a2-1) * obj.len_a1;
@@ -516,7 +517,12 @@ classdef Lattice
                         y2 = atoms(hope_atoms(2),2) + (j1+relat_position(1)) * basic(1,2)...
                             + (j2+relat_position(2)) * basic(2,2);
                         hold on;
-                        line([x1,x2],[y1,y2],plot_parms{:});
+                        if length(varargin) == 2||~ischar(varargin{3})
+                            line([x1,x2],[y1,y2],'color',random_color,'linewidth',2);
+                        else
+                            line([x1,x2],[y1,y2],plot_parms{:});
+                        end
+                        
                     end
                 end
             else
@@ -533,8 +539,11 @@ classdef Lattice
                     end
                 end
                 hold on;
-                scatter(x,y,'filled',plot_parms{:});
-
+                if length(varargin) == 2|| ~ischar(varargin{3})
+                    scatter(x,y,'filled','Color',random_color);
+                else
+                    scatter(x,y,'filled',plot_parms{:});
+                end
             end
             xlim([0,max(basic(:,1)*max([lattice_a1,lattice_a2]))]);
             ylim([0,max(basic(:,2)*max([lattice_a1,lattice_a2]))]);
