@@ -28,17 +28,17 @@ graphere.plot_kpath(Kx,Ky)
 %%
 atoms = [0, 0; 1/2, -sqrt(3)/2; 3/2, -sqrt(3)/2; 2, 0];
 basic = [3,0; 0, sqrt(3)];
-graphere = Lattice(atoms,basic,300,2);
+graphere = Lattice(atoms,basic,100,2);
 graphere.plot_FBZ();
 %%
 graphere.transport_symmetry = [0,sqrt(3)];
 hopping = hope(t,t_so,lam,graphere);
 K = linspace(0,3.62,200);
-Es = zeros(length(K),300);
+Es = zeros(length(K),400);
 tic
 parfor j1 = 1:length(K)
     H = graphere.hamilton(hopping,K(j1));
-    E = eigs(H,300,'smallestabs');
+    E = eigs(H,400,'smallestabs');
     Es(j1,:) = E;
 end
 toc
@@ -46,9 +46,8 @@ figure()
 plot(K,Es','k.','MarkerSize',4)
 ylim([-2,2])
 yticks([-2,-1,0,1,2])
-xlim([0,2*pi])
+xlim([0,max(K)])
 ylim([-1,1])
-%%
 delete(p)
 %%
 function hopping = hope(t,t_so,lam,graphere)
